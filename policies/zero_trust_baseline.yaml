@@ -1,0 +1,41 @@
+version: "1.0"
+metadata:
+  profile: "Zero-Trust-Workload-Baseline"
+  enforcement_mode: "ENFORCING" # ENFORCING or AUDIT
+  description: "Enterprise Zero-Trust Kubernetes Pod Security & Admission Guardrails"
+
+allowed_registries:
+  - "123456789012.dkr.ecr.us-east-1.amazonaws.com"
+  - "gcr.io/enterprise-prod"
+  - "quay.io/trusted-enterprise"
+
+disallow_image_tags:
+  - "latest"
+  - "dev"
+  - "master"
+  - "nightly"
+
+security_context_guardrails:
+  require_run_as_non_root: true
+  disallow_privileged: true
+  disallow_host_network: true
+  disallow_host_pid: true
+  disallow_host_ipc: true
+  require_read_only_root_filesystem: true
+  drop_all_capabilities: true
+  allowed_capabilities:
+    - "NET_BIND_SERVICE"
+
+resource_limits_guardrails:
+  require_cpu_limits: true
+  require_memory_limits: true
+  require_cpu_requests: true
+  require_memory_requests: true
+  max_cpu_limit_cores: 4.0
+  max_memory_limit_gi: 8.0
+
+mandatory_labels:
+  - "app.kubernetes.io/name"
+  - "app.kubernetes.io/part-of"
+  - "security.enterprise.io/owner"
+  - "security.enterprise.io/environment"

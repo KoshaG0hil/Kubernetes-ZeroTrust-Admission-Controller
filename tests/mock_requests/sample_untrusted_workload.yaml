@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insecure-crypto-miner
+  namespace: default
+  labels:
+    app.kubernetes.io/name: "crypto-miner"
+    # Missing mandatory labels
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crypto-miner
+  template:
+    metadata:
+      labels:
+        app: crypto-miner
+    spec:
+      hostNetwork: true
+      hostPID: true
+      containers:
+        - name: miner
+          image: docker.io/malicious/miner:latest
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            readOnlyRootFilesystem: false
+          # Missing CPU & Memory limits
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: compliant-zero-trust-microservice
+  namespace: production
+  labels:
+    app.kubernetes.io/name: "payment-api"
+    app.kubernetes.io/part-of: "billing-platform"
+    security.enterprise.io/owner: "payments-team"
+    security.enterprise.io/environment: "production"
+spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    fsGroup: 10001
+  containers:
+    - name: api
+      image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/payment-service:v2.1.0
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop:
+            - ALL
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "256Mi"
+        limits:
+          cpu: "1000m"
+          memory: "1Gi"
