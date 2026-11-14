@@ -1,6 +1,7 @@
 # ☸️ Kubernetes Zero-Trust Workload Admission Controller & Quarantine Mesh
 
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.28%2B-326CE5.svg?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
+[![CI](https://github.com/KoshaG0hil/Kubernetes-ZeroTrust-Admission-Controller/actions/workflows/ci.yml/badge.svg)](https://github.com/KoshaG0hil/Kubernetes-ZeroTrust-Admission-Controller/actions/workflows/ci.yml)
 [![Zero Trust](https://img.shields.io/badge/Security-Zero_Trust_Admission-darkgreen.svg)](https://www.cisa.gov/)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/Webhook-FastAPI-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
